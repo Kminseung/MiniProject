@@ -5,30 +5,32 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class PhoneBook {
 	static final String rootPath = System.getProperty("user.dir");	
 	static final String source = rootPath + "\\addressBook.txt";
-	
+
 	Scanner s = new Scanner(System.in);
 	
-	List<Phone> phone = new ArrayList<Phone>();
+	private List<Phone> phone = InitPhoneBook.getPhone();
 	
 	private String name = null;		// 등록 시 입력받는 이름 저장 변수
 	private String hp = null;		// 등록 시 입력받는 휴대전화 저장 변수
 	private String tel = null;		// 등록 시 입력받는 집전화 저장 변수
 	
-	private int n = 0;
+	private int n = 0;				// 삭제 시 입력받는 번호 저장 변수
 	
-	private String sname = null;
+	private String sname = null;	// 검색 시 입력받는 이름 저장 변수
+
+	
 	
 	// 1번 리스트 기능
 	// 파일 복사 및 리스트에 값 저장, 전체 조회 기능
 	public void readPhone() {
 		phone.clear();
+		
 		FileReader fr = null;
 		BufferedReader br = null;
 		
@@ -68,6 +70,8 @@ public class PhoneBook {
 		System.out.println();
 	}
 	
+	
+	
 	// 2번 등록 기능
 	// 등록 시 바로 파일에 덮어쓰기
 	public void registerPhone() {
@@ -106,6 +110,8 @@ public class PhoneBook {
 		}
 	}
 	
+	
+	
 	// 3번 삭제 기능
 	// 입력 받은 숫자로 리스트에서 remove
 	// 갱신된 리스트를 파일에 새로 저장
@@ -115,16 +121,19 @@ public class PhoneBook {
 		System.out.print("> 번호 : ");
 		n =  s.nextInt();
 		
-		phone.remove(n-1);
-		System.out.println("\n[삭제되었습니다.]\n");
-		
 		FileWriter writer = null;
 		try {
+			phone.remove(n-1);
+			System.out.println("\n[삭제되었습니다.]\n");
+			
 			writer = new FileWriter(source);
 			for(int i=0; i<phone.size(); i++) {
 				String line = phone.get(i).getName()+","+phone.get(i).getHp()+","+phone.get(i).getTel()+"\n";
 				writer.write(line);
 			}
+		}
+		catch(IndexOutOfBoundsException e) {
+			System.err.println("해당 번호의 내용이 없습니다.\n");
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -139,8 +148,11 @@ public class PhoneBook {
 		}
 	}
 	
+	
+	
 	// 4번 검색 기능
 	public void searchPhone() {
+		//test();
 		System.out.println("\n<4. 검색>");
 		
 		System.out.print("> 이름 : ");

@@ -3,11 +3,10 @@ package com.java.phone;
 public class PhoneApp {
 
 	public static void main(String[] args) {
-		Show addressBook = new Show();
 		InitPhoneBook init = new InitPhoneBook();
+		Show addressBook = new Show();
 		
 		init.initPhoneBook();
 		addressBook.show();
 	}
-
 }

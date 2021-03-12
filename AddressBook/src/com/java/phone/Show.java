@@ -3,7 +3,7 @@ package com.java.phone;
 import java.util.Scanner;
 
 public class Show {
-	PhoneBook pb = new PhoneBook();
+	private PhoneBook pb = new PhoneBook();
 	private int n;
 	
 	public void show() {
@@ -48,6 +48,7 @@ public class Show {
 			}
 			
 			if(n == 5) break;
+			s.close();
 		}
 	}
 }
